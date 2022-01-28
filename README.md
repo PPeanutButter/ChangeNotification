@@ -1,6 +1,7 @@
 # ChangeDetection
 > 监听web或者api内容变更, 该仓库是[花生酱的家庭流媒体](https://github.com/PPeanutButter/HomeMediaServer)的组成部分。
 
+![](shot.jpg)
 # usage&sample
 > 在同级目录下建立任务文件`change_detection_tasks.json`, 其中任务示例如下：
 ```json
