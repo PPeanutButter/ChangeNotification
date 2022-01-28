@@ -16,7 +16,12 @@
         },
         "message": {
             "type": "HTMLMessage" #该名称为消息体名字, 只能是message目录下的一个
-        }
+        },
+        # 下面的字段不填默认为base_tasks.json内的, 如果每个任务的收件人都是一样的可以填写在base_tasks.json中
+        "EmailFrom": "xx@qq.com",
+        "EmailTo": "xx@outlook.com",
+        "EmailPassword": "xxx",
+        "SMTP_SSL": "smtp.qq.com"
     },
 ]
 ```
