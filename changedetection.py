@@ -20,8 +20,8 @@ def build_message_from_cfg(task_cfg):
 
 
 def merge_cfg_by_default(task_cfg):
-    with open("base_tasks.json", 'r', encoding='utf-8') as f:
-        base_tasks = json.loads(f.read())
+    with open("base_tasks.json", 'r', encoding='utf-8') as fr:
+        base_tasks = json.loads(fr.read())
     for k, v in base_tasks.items():
         if k not in task_cfg:
             task_cfg[k] = v
