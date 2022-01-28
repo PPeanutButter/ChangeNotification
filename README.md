@@ -26,22 +26,36 @@
     },
 ]
 ```
-## JSON选择器示例
-> 在同级目录下建立任务文件`change_detection_tasks.json`, 其中任务示例如下：
+## JSON选择器示例1
+> 监听B站番剧更新：
 ```json
-[
-    {
-        "title": "高木同学 第3季",
-        "parser": {
-            "type": "SimpleJsonParser",
-            "selector": "$.result[*].episodes[?(@.title=='擅长捉弄的高木同学 第三季')].pub_index",
-            "url": "https://api.bilibili.com/pgc/web/timeline?types=1&before=0&after=0"
-        },
-        "message": {
-            "type": "HTMLMessage"
-        }
+{
+    "title": "高木同学 第3季",
+    "parser": {
+        "type": "SimpleJsonParser",
+        "selector": "$.result[*].episodes[?(@.title=='擅长捉弄的高木同学 第三季')].pub_index",
+        "url": "https://api.bilibili.com/pgc/web/timeline?types=1&before=0&after=0"
+    },
+    "message": {
+        "type": "HTMLMessage"
     }
-]
+}
+```
+## JSON选择器示例2
+> E宝喜加一(Epic)：
+```json
+{
+    "title": "E宝喜加一",
+    "parser": {
+        "type": "SimpleJsonParser",
+        "selector": "$.data.Catalog.searchStore.elements[?(@.promotions.promotionalOffers)].title",
+        "regex": ".*",
+        "url": "https://store-site-backend-static-ipv4.ak.epicgames.com/freeGamesPromotions?locale=zh-CN&country=CN&allowCountries=CN"
+    },
+    "message": {
+        "type": "HTMLMessage"
+    }
+}
 ```
 # 二次开发
 若需要http认证请通过继承`JSONParser`或者`CSSParser`重写相关函数即可, 否则可以继承封装了http请求的`Simple*Parser`来简化. 如`BTBTTParser`实现了直接通知磁力链接而不是通知标题，代码如下:
