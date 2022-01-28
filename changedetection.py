@@ -39,8 +39,8 @@ if __name__ == '__main__':
         parser = build_parser_from_cfg(task)
         old, new = parser.parse(task['title'])
         if new:
-            message = build_message_from_cfg(task).build_message(task['title'], [i[1] for i in new])
+            message = build_message_from_cfg(task).build_message([i[1] for i in new])
             notify(message, end='')
-            mail("关注助手", "您关注的东西更新啦~", msg_from=task['EmailFrom'],
+            mail(task['title'], "关注助手", msg_from=task['EmailFrom'],
                  msg_to=task['EmailTo'], password=task['EmailPassword'],
                  smtp_ssl=task['SMTP_SSL'])

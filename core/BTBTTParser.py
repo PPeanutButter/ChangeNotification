@@ -19,7 +19,7 @@ class BTBTTParser(CSSParser):
         if selected.name == 'a' and str(selected.text).endswith('.torrent'):
             download_url = f"{ori_url.scheme}://{ori_url.hostname}/{selected.attrs['href']}"\
                 .replace("-dialog-", "-download-")
-            return os.popen(f'bt2magnet "{download_url}"').read().strip('\n')
+            return self.get_id(selected) + '\n'+os.popen(f'bt2magnet "{download_url}"').read().strip('\n')
         else:
             return self.get_id(selected)
 
