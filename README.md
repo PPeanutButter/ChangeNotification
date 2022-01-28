@@ -60,4 +60,4 @@ class BTBTTParser(CSSParser):
 # build
 > 编译以省去`python changedetection.py`
 
-终端运行`pyinstaller -F .\changedetection.py`, 并将可执行文件添加到环境变量，或者下载编译好的`for Windows 64`和`for raspberry arm64 linux`
+在`sendNotify.py`填入邮箱密码, 终端运行`pyinstaller -F .\changedetection.py`, 并将可执行文件添加到环境变量，或者下载编译好的`for Windows 64`和`for raspberry arm64 linux`
