@@ -49,7 +49,7 @@
     "parser": {
         "type": "SimpleJsonParser",
         "selector": "$.data.Catalog.searchStore.elements[?(@.promotions.promotionalOffers)].title",
-        "regex": ".*",
+        "regex": ".*", # 缺失默认为.*
         "url": "https://store-site-backend-static-ipv4.ak.epicgames.com/freeGamesPromotions?locale=zh-CN&country=CN&allowCountries=CN"
     },
     "message": {
