@@ -1,0 +1,14 @@
+[
+    {
+        "title": "雪国列车(剧版) 第三季",
+        "parser": {
+            "type": "BTBTTParser",
+            "selector": 6,
+            "regex": "AMZN",
+            "url": "http://btbtt11.com/thread-index-fid-950-tid-4612833.htm"
+        },
+        "message": {
+            "type": "HTMLMessage"
+        }
+    }
+]
