@@ -33,29 +33,25 @@ def console() -> None:
         f.write(allMess + content_old)
 
 
-def mail(title: str, subject="树莓派薅羊毛脚本") -> None:
+def mail(title: str, subject, msg_from, password, msg_to, smtp_ssl) -> None:
     """
     使用 电子邮箱 推送消息。
     """
     import smtplib
     from email.mime.text import MIMEText
     from email.header import Header
-    msg_from = '290120506@qq.com'  # 发送方邮箱地址。
-    password = ""  # 发送方QQ邮箱授权码，不是QQ邮箱密码。
 
-    # subject = "体温填报"  # 主题。
     content = allMess.replace('\n', '<br>')  # 邮件正文内容。
     msg = MIMEText(content, 'html', 'utf-8')
 
     msg_header = Header(title, 'utf-8')
-    msg_header.append('<290120506@qq.com>', 'ascii')
-    msg_to = "panrunqiu@outlook.com"
+    msg_header.append(f'<{msg_from}>', 'ascii')
     msg['Subject'] = subject
     msg['From'] = msg_header
     msg['To'] = msg_to
     client = None
     try:
-        client = smtplib.SMTP_SSL('smtp.qq.com', smtplib.SMTP_SSL_PORT)
+        client = smtplib.SMTP_SSL(smtp_ssl, smtplib.SMTP_SSL_PORT)
         client.login(msg_from, password)
         client.sendmail(msg_from, msg_to, msg.as_string())
     except smtplib.SMTPException as e:

@@ -19,19 +19,28 @@ def build_message_from_cfg(task_cfg):
     return obj_cls(**parser_cfg)
 
 
+def merge_cfg_by_default(task_cfg):
+    with open("base_tasks.json", 'r', encoding='utf-8') as f:
+        base_tasks = json.loads(f.read())
+    for k, v in base_tasks.items():
+        if k not in task_cfg:
+            task_cfg[k] = v
+    return task_cfg
+
+
 """crontab
 0 6,18 * * *
 """
 if __name__ == '__main__':
-    should_notify = False
     with open("change_detection_tasks.json", 'r', encoding='utf-8') as f:
         tasks = json.loads(f.read())
     for i, task in enumerate(tasks):
+        task = merge_cfg_by_default(task)
         parser = build_parser_from_cfg(task)
         old, new = parser.parse(task['title'])
         if new:
             message = build_message_from_cfg(task).build_message(task['title'], [i[1] for i in new])
             notify(message, end='')
-            should_notify = True
-    if should_notify:
-        mail("关注助手", "您关注的东西更新啦~")
+            mail("关注助手", "您关注的东西更新啦~", msg_from=task['EmailFrom'],
+                 msg_to=task['EmailTo'], password=task['EmailPassword'],
+                 smtp_ssl=task['SMTP_SSL'])
