@@ -1,9 +1,10 @@
 import json
-
+import Registry
 from jsonpath import jsonpath
 from .BaseParser import BaseParser
 
 
+@Registry.register_module
 class JSONParser(BaseParser):
     def __init__(self, json_data, selector):
         self.json_data = json_data

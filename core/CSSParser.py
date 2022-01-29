@@ -1,7 +1,9 @@
+import Registry
 from bs4 import BeautifulSoup
 from .BaseParser import BaseParser
 
 
+@Registry.register_module
 class CSSParser(BaseParser):
     def __init__(self, html_data, selector):
         self.html_data = html_data

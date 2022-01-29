@@ -1,9 +1,11 @@
 import os
 import urllib.parse
 
+import Registry
 from .CSSParser import CSSParser
 
 
+@Registry.register_module
 class BTBTTParser(CSSParser):
     def __init__(self, url, selector, regex='.*'):
         self.url = url

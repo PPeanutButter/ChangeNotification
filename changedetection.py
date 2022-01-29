@@ -1,10 +1,11 @@
 import json
-
+import core
+import message
+from Registry import module_dict
 from sendNotify import mail
 
 
 def build_parser_from_cfg(task_cfg):
-    from core.all import module_dict
     parser_cfg = task_cfg['parser']
     obj_type = parser_cfg.pop('type')
     obj_cls = module_dict[obj_type]
@@ -12,7 +13,6 @@ def build_parser_from_cfg(task_cfg):
 
 
 def build_message_from_cfg(task_cfg):
-    from message.all import module_dict
     parser_cfg = task_cfg['message']
     obj_type = parser_cfg.pop('type')
     obj_cls = module_dict[obj_type]
@@ -36,8 +36,7 @@ if __name__ == '__main__':
         tasks = json.loads(f.read())
     for i, task in enumerate(tasks):
         task = merge_cfg_by_default(task)
-        parser = build_parser_from_cfg(task)
-        old, new = parser.parse(task['title'])
+        old, new = build_parser_from_cfg(task).parse(task['title'])
         if new:
             message = build_message_from_cfg(task).build_message([i[1] for i in new])
             mail(task['title'], "关注助手", allMess=message, msg_from=task['EmailFrom'],

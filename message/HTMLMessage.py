@@ -1,6 +1,8 @@
+import Registry
 from .BaseMessage import BaseMessage
 
 
+@Registry.register_module
 class HTMLMessage(BaseMessage):
     def __init__(self):
         self.head = """<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Title</title></head><body><ul><li>"""
