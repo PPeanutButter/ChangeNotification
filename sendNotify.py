@@ -1,39 +1,4 @@
-import json
-import logging
-import threading
-
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
-logFormat = logging.Formatter("%(message)s")
-stream = logging.StreamHandler()
-stream.setFormatter(logFormat)
-logger.addHandler(stream)
-
-# 配信内容格式
-allMess = ''
-mutex = threading.Lock()
-
-
-def notify(content=None, end='\n'):
-    with mutex:
-        global allMess
-        if isinstance(content, dict):
-            content = json.dumps(content, ensure_ascii=False)
-        allMess = allMess + content + end
-        logger.info(content)
-
-
-def console() -> None:
-    """
-    使用 控制台 推送消息。
-    """
-    with open('log.log', 'r+', encoding='utf-8') as f:
-        content_old = f.read()
-        f.seek(0, 0)
-        f.write(allMess + content_old)
-
-
-def mail(title: str, subject, msg_from, password, msg_to, smtp_ssl) -> None:
+def mail(title: str, subject, allMess, msg_from, password, msg_to, smtp_ssl) -> None:
     """
     使用 电子邮箱 推送消息。
     """
@@ -59,22 +24,3 @@ def mail(title: str, subject, msg_from, password, msg_to, smtp_ssl) -> None:
     finally:
         if client:
             client.quit()
-
-
-def send(title: str, content: str) -> None:
-    if not content:
-        print(f"{title} 推送内容为空！")
-        return
-    console()
-
-
-def save() -> None:
-    console()
-
-
-def main():
-    send("title", "content")
-
-
-if __name__ == "__main__":
-    main()
