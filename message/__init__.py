@@ -1,2 +1,3 @@
 from .HTMLMessage import HTMLMessage
-__all__ = ['HTMLMessage']
+from .BilibiliMessage import BilibiliMessage
+__all__ = ['HTMLMessage', 'BilibiliMessage']
