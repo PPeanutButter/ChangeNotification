@@ -76,7 +76,7 @@
     }
 }
 ```
-BilibiliParser：
+BilibiliParser, 重写JSONParser支持高级HTTP请求和图片消息：
 ```python
 import json
 
