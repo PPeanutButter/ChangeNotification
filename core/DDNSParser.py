@@ -10,6 +10,7 @@ class DDNSParser(BaseParser):
         self.server = server
         self.domain = domain
         self.protocol = protocol
+        self.regex = ".*"
         self.authorization = "Basic "+base64.b64encode((":"+password).encode()).decode()
         super(DDNSParser, self).__init__([self.get(web)])
 
