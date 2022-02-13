@@ -12,11 +12,18 @@ class DDNSParser(BaseParser):
         self.protocol = protocol
         self.regex = ".*"
         self.authorization = "Basic "+base64.b64encode((":"+password).encode()).decode()
-        super(DDNSParser, self).__init__([self.get(web)])
+        try:
+            ipv6 = self.get(web)
+        except BaseException:
+            ipv6 = None
+        super(DDNSParser, self).__init__([ipv6])
 
     def get_id(self, selected):
-        url = f"https://{self.server}/nic/update?system={self.protocol}&hostname={self.domain}&myip={selected}"
-        return requests.request('GET', url=url, headers=dict(authorization=self.authorization)).text
+        if selected:
+            url = f"https://{self.server}/nic/update?system={self.protocol}&hostname={self.domain}&myip={selected}"
+            return requests.request('GET', url=url, headers=dict(authorization=self.authorization)).text
+        else:
+            return ""
 
     def get_name(self, selected):
         return self.get_id(selected)
