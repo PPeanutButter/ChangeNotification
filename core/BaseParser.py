@@ -20,14 +20,14 @@ class BaseParser:
         old, new = [], []
         for selected in self.selects:
             tid = self.get_id(selected)
-            name = self.get_name(selected)
             md5 = self.get_md5(tid)
             if tid and re.search(self.regex, tid):
                 if md5 not in task_data_store[task_title]:
                     task_data_store[task_title].append(md5)
-                    new.append((tid, name))
+                    name = self.get_name(selected)
+                    new.append(name)
                 else:
-                    old.append((tid, name))
+                    old.append(tid)
         with open('task_data_store.json', 'w', encoding='utf-8') as f:
             f.write(json.dumps(task_data_store, ensure_ascii=False, indent=4))
         return old, new

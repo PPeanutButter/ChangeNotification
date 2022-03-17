@@ -35,7 +35,7 @@ def job(_task):
     _task = merge_cfg_by_default(_task)
     old, new = build_parser_from_cfg(_task).parse(_task['title'])
     if new:
-        mail(_task['title'], "关注助手", allMess=build_message_from_cfg(_task).build_message([i[1] for i in new]),
+        mail(_task['title'], "关注助手", allMess=build_message_from_cfg(_task).build_message([i for i in new]),
              msg_from=_task['EmailFrom'], msg_to=_task['EmailTo'], password=_task['EmailPassword'],
              smtp_ssl=_task['SMTP_SSL'])
 
