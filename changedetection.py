@@ -1,6 +1,8 @@
 import json
+import threading
 import core
 import message
+from multiprocessing import Process
 from Registry import module_dict
 from sendNotify import mail
 
@@ -28,18 +30,26 @@ def merge_cfg_by_default(task_cfg):
     return task_cfg
 
 
+def job(_task):
+    _task = merge_cfg_by_default(_task)
+    old, new = build_parser_from_cfg(_task).parse(_task['title'])
+    if new:
+        mail(_task['title'], "关注助手", allMess=build_message_from_cfg(_task).build_message([i[1] for i in new]),
+             msg_from=_task['EmailFrom'], msg_to=_task['EmailTo'], password=_task['EmailPassword'],
+             smtp_ssl=_task['SMTP_SSL'])
+
+
 """crontab
 0 6,18 * * *
 """
 if __name__ == '__main__':
     with open("change_detection_tasks.json", 'r', encoding='utf-8') as f:
         tasks = json.loads(f.read())
-    for i, task in enumerate(tasks):
-        task = merge_cfg_by_default(task)
-        old, new = build_parser_from_cfg(task).parse(task['title'])
-        if new:
-            message = build_message_from_cfg(task).build_message([i[1] for i in new])
-            print(message)
-            mail(task['title'], "关注助手", allMess=message, msg_from=task['EmailFrom'],
-                 msg_to=task['EmailTo'], password=task['EmailPassword'],
-                 smtp_ssl=task['SMTP_SSL'])
+    thread_lock = threading.Semaphore(4)
+    for task in tasks:
+        if thread_lock.acquire():
+            try:
+                Process(target=job, args=(task,)).start()
+            finally:
+                thread_lock.release()
+
