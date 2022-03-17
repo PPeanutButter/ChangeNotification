@@ -31,6 +31,7 @@ def merge_cfg_by_default(task_cfg):
 
 
 def job(_task):
+    print("running ", _task['title'])
     _task = merge_cfg_by_default(_task)
     old, new = build_parser_from_cfg(_task).parse(_task['title'])
     if new:
