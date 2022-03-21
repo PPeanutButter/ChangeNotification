@@ -1,5 +1,6 @@
 {
     "EmailFrom": "290120506@qq.com",
+    "QQ": "290120506",
     "EmailTo": "panrunqiu@outlook.com",
     "EmailPassword": "",
     "SMTP_SSL": "smtp.qq.com"

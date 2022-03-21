@@ -1,3 +1,6 @@
+import requests
+
+
 def mail(title: str, subject, allMess, msg_from, password, msg_to, smtp_ssl) -> None:
     """
     使用 电子邮箱 推送消息。
@@ -24,3 +27,10 @@ def mail(title: str, subject, allMess, msg_from, password, msg_to, smtp_ssl) -> 
     finally:
         if client:
             client.quit()
+
+
+def qq(msg_to, msg):
+    try:
+        print(requests.get(url=f'http://127.0.0.1:8080/send?msg={msg}&qq={msg_to}'))
+    except BaseException as e:
+        print("error when send email", e)

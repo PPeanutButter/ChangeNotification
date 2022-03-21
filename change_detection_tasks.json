@@ -1,11 +1,11 @@
 [
     {
-        "title": "雪国列车(剧版) 第三季",
+        "title": "异星灾变 第二季",
         "parser": {
             "type": "BTBTTParser",
             "selector": 6,
-            "regex": "AMZN",
-            "url": "http://btbtt11.com/thread-index-fid-950-tid-4612833.htm"
+            "regex": "HMAX",
+            "url": "https://btbtt11.com/thread-index-fid-950-tid-4613873.htm"
         },
         "message": {
             "type": "HTMLMessage"
