@@ -7,6 +7,7 @@ import requests
 
 class BaseParser:
     def __init__(self, selects):
+        self.regex = ".*"
         self.selects = selects
 
     def parse(self, task_title):

@@ -1,0 +1,18 @@
+{
+    "BTBTTParser": {
+        "readme": "BTBTTParser是BT之家(btbtt11.com)的解析器。",
+        "example": {
+            "selector": 6,
+            "regex": "2160",
+            "url": "https://btbtt11.com/thread-index-fid-950-tid-4652872.htm"
+        },
+        "signature": {
+            "selector": "Int",
+            "regex": "String",
+            "url": "String"
+        }
+    },
+    "TextMessage": {
+        "readme": "TextMessage发送纯文本消息。"
+    }
+}

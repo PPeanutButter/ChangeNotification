@@ -1,4 +1,7 @@
+import argparse
 import json
+import os
+import sys
 import threading
 import core
 import message
@@ -42,13 +45,51 @@ def job(_task):
 0 6,18 * * *
 """
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--debug', action='store_true')
+    parser.add_argument('--show_cfg', action='store_true', help='打印支持的解析器与消息发送器')
+    parser.add_argument('--show_tasks', action='store_true', help='打印所有任务')
+    parser.add_argument('--show_records', action='store_true', help='打印所有任务记录')
+    parser.add_argument('--with_readable', action='store_true', help='格式化json')
+    args = parser.parse_args()
+    if args.show_cfg:
+        with open('doc.json', mode='r', encoding='utf-8') as f:
+            doc = json.loads(f.read())
+        _p = []
+        _m = []
+        for k, v in module_dict.items():
+            r = {}
+            if k in doc:
+                r[k] = doc[k]
+                if str(k).endswith("Parser"):
+                    _p.append(r)
+                else:
+                    _m.append(r)
+        print(json.dumps(dict(parser=_p, messager=_m), ensure_ascii=False, indent=4 if args.with_readable else None))
+        sys.exit(0)
     with open("change_detection_tasks.json", 'r', encoding='utf-8') as f:
         tasks = json.loads(f.read())
-    thread_lock = threading.Semaphore(4)
-    for task in tasks:
-        if thread_lock.acquire():
-            try:
-                Process(target=job, args=(task,)).start()
-            finally:
-                thread_lock.release()
+        if args.show_tasks:
+            print(json.dumps(tasks, ensure_ascii=False, indent=4 if args.with_readable else None))
+            sys.exit(0)
+    if args.show_records:
+        if os.path.exists('task_data_store.json'):
+            with open('task_data_store.json', 'r', encoding='utf-8') as f:
+                task_data_store = json.loads(f.read())
+                print(json.dumps(task_data_store, ensure_ascii=False, indent=4 if args.with_readable else None))
+        else:
+            print("{}")
+        sys.exit(0)
+
+    if args.debug:
+        for task in tasks:
+            job(task)
+    else:
+        thread_lock = threading.Semaphore(4)
+        for task in tasks:
+            if thread_lock.acquire():
+                try:
+                    Process(target=job, args=(task,)).start()
+                finally:
+                    thread_lock.release()
 

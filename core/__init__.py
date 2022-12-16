@@ -4,4 +4,5 @@ from .BTBTTParser import BTBTTParser
 from .SimpleJsonParser import SimpleJsonParser
 from .DDNSParser import DDNSParser
 from .DellParser import DellParser
-__all__ = ['JSONParser', 'CSSParser', 'BTBTTParser', 'SimpleJsonParser', 'DDNSParser', 'DellParser']
+from .MIUIParser import MIUIParser
+__all__ = ['JSONParser', 'CSSParser', 'BTBTTParser', 'SimpleJsonParser', 'DDNSParser', 'DellParser', 'MIUIParser']
