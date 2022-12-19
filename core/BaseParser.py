@@ -4,6 +4,8 @@ import os
 import re
 import requests
 
+from changedetection import home
+
 
 class BaseParser:
     def __init__(self, selects):
@@ -11,8 +13,8 @@ class BaseParser:
         self.selects = selects
 
     def parse(self, task_title):
-        if os.path.exists('task_data_store.json'):
-            with open('task_data_store.json', 'r', encoding='utf-8') as f:
+        if os.path.exists(home('task_data_store.json')):
+            with open(home('task_data_store.json'), 'r', encoding='utf-8') as f:
                 task_data_store = json.loads(f.read())
         else:
             task_data_store = {}
@@ -29,7 +31,7 @@ class BaseParser:
                     new.append(name)
                 else:
                     old.append(tid)
-        with open('task_data_store.json', 'w', encoding='utf-8') as f:
+        with open(home('task_data_store.json'), 'w', encoding='utf-8') as f:
             f.write(json.dumps(task_data_store, ensure_ascii=False, indent=4))
         return old, new
 

@@ -7,11 +7,12 @@ from .CSSParser import CSSParser
 
 @Registry.register_module
 class BTBTTParser(CSSParser):
-    def __init__(self, url, selector, regex='.*'):
+    def __init__(self, url, selector, regex='.*', proxy=""):
         self.url = url
         self.selector = self.build_selector(selector)
         self.regex = regex
-        super(BTBTTParser, self).__init__(self.get(self.url), self.selector)
+        self.proxy = proxy
+        super(BTBTTParser, self).__init__(self.get(proxy+self.url), self.selector)
 
     def get_id(self, selected):
         return selected.text
@@ -19,7 +20,7 @@ class BTBTTParser(CSSParser):
     def get_name(self, selected):
         ori_url = urllib.parse.urlparse(self.url)
         if selected.name == 'a' and str(selected.text).endswith('.torrent'):
-            download_url = f"{ori_url.scheme}://{ori_url.hostname}/{selected.attrs['href']}"\
+            download_url = f"{self.proxy}{ori_url.scheme}://{ori_url.hostname}/{selected.attrs['href']}"\
                 .replace("-dialog-", "-download-")
             return '📺'+self.get_id(selected) + '\n🧲'+os.popen(f'bt2magnet "{download_url}"').read().strip('\n')
         else:

@@ -12,6 +12,17 @@
             "url": "String"
         }
     },
+    "MIUIParser": {
+        "readme": "MIUIParser是MIUI更新站(miui.511i.cn)的解析器。",
+        "example": {
+            "dh": "UNICORN",
+            "lx": "1b"
+        },
+        "signature": {
+            "dh": "String",
+            "lx": "String"
+        }
+    },
     "TextMessage": {
         "readme": "TextMessage发送纯文本消息。"
     }
