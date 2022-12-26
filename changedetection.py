@@ -38,7 +38,7 @@ def job(_task):
     _task = merge_cfg_by_default(_task)
     old, new = build_parser_from_cfg(_task).parse(_task['title'])
     if new:
-        qq(msg_to=_task['QQ'], msg=build_message_from_cfg(_task).build_message([i for i in new]))
+        qq(msg_to=_task['QQ'], msg=build_message_from_cfg(_task).build_message([i for i in new]), title=_task['title'])
 
 
 def home(path):

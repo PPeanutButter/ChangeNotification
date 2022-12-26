@@ -5,4 +5,6 @@ from .SimpleJsonParser import SimpleJsonParser
 from .DDNSParser import DDNSParser
 from .DellParser import DellParser
 from .MIUIParser import MIUIParser
-__all__ = ['JSONParser', 'CSSParser', 'BTBTTParser', 'SimpleJsonParser', 'DDNSParser', 'DellParser', 'MIUIParser']
+from .EBayParser import EBayParser
+__all__ = ['JSONParser', 'CSSParser', 'BTBTTParser', 'SimpleJsonParser', 'DDNSParser', 'DellParser', 'MIUIParser',
+           'EBayParser']

@@ -1,2 +1,12 @@
 [
+    {
+        "title": "E宝喜加一",
+        "parser": {
+            "type": "EBayParser",
+            "url": "https://store-site-backend-static-ipv4.ak.epicgames.com/freeGamesPromotions?locale=zh-CN&country=CN&allowCountries=CN"
+        },
+        "message": {
+            "type": "HTMLMessage"
+        }
+    }
 ]

@@ -29,8 +29,8 @@ def mail(title: str, subject, allMess, msg_from, password, msg_to, smtp_ssl) -> 
             client.quit()
 
 
-def qq(msg_to, msg):
+def qq(msg_to, msg, title="脚本通知"):
     try:
-        print(requests.get(url=f'http://127.0.0.1:8080/send?msg={msg}&qq={msg_to}'))
+        print(requests.get(url=f'http://127.0.0.1:8080/send?msg={msg}&qq={msg_to}&title={title}'))
     except BaseException as e:
         print("error when send email", e)
