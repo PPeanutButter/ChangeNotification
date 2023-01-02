@@ -14,7 +14,7 @@ class DDNSParser(BaseParser):
         self.protocol = protocol
         self.authorization = "Basic "+base64.b64encode((":"+password).encode()).decode()
         try:
-            ipv4 = subprocess.check_output("hostname -I | cut -d' ' -f1", shell=True).decode("utf-8")
+            ipv4 = subprocess.check_output("hostname -I | cut -d' ' -f1", shell=True).decode("utf-8").strip("\n")
         except BaseException as e:
             print(e.__str__())
             ipv4 = None
@@ -24,7 +24,7 @@ class DDNSParser(BaseParser):
         if selected:
             url = f"https://{self.server}/nic/update?system={self.protocol}&hostname={self.domain}&myip={selected}"
             r = requests.request('GET', url=url, headers=dict(authorization=self.authorization)).text
-            print(f"report to server({selected}):", r)
+            print(f"https://{self.server}/nic/update?system={self.protocol}&hostname={self.domain}&myip={selected}", r)
         return ""
 
     def get_name(self, selected):
