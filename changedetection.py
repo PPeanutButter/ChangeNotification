@@ -2,10 +2,8 @@ import argparse
 import json
 import os
 import sys
-import threading
 import core
 import message
-from multiprocessing import Process
 from Registry import module_dict
 from sendNotify import qq
 
@@ -34,11 +32,14 @@ def merge_cfg_by_default(task_cfg):
 
 
 def job(_task):
-    print("running ", _task['title'])
-    _task = merge_cfg_by_default(_task)
-    old, new = build_parser_from_cfg(_task).parse(_task['title'])
-    if new:
-        qq(msg_to=_task['QQ'], msg=build_message_from_cfg(_task).build_message([i for i in new]), title=_task['title'])
+    try:
+        print("running ", _task['title'])
+        _task = merge_cfg_by_default(_task)
+        old, new = build_parser_from_cfg(_task).parse(_task['title'])
+        if new:
+            qq(msg_to=_task['QQ'], msg=build_message_from_cfg(_task).build_message([i for i in new]), title=_task['title'])
+    except BaseException as e:
+        print(e)
 
 
 def home(path):
@@ -89,15 +90,5 @@ if __name__ == '__main__':
         else:
             print("{}")
         sys.exit(0)
-
-    if args.debug:
-        for task in tasks:
-            job(task)
-    else:
-        thread_lock = threading.Semaphore(4)
-        for task in tasks:
-            if thread_lock.acquire():
-                try:
-                    Process(target=job, args=(task,)).start()
-                finally:
-                    thread_lock.release()
+    for task in tasks:
+        job(task)
