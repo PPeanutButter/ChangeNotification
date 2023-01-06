@@ -23,7 +23,7 @@ class BaseParser:
         old, new = [], []
         for selected in self.selects:
             tid = self.get_id(selected)
-            md5 = self.get_md5(tid)
+            md5 = self.get_md5(tid) + " " + tid[:100]
             if tid and re.search(self.regex, tid):
                 if md5 not in task_data_store[task_title]:
                     task_data_store[task_title].append(md5)
