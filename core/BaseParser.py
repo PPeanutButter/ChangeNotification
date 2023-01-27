@@ -9,7 +9,10 @@ from changedetection import home
 
 class BaseParser:
     def __init__(self, selects):
-        self.regex = ".*"
+        try:
+            self.regex
+        except AttributeError:
+            self.regex = ".*"
         self.selects = selects
 
     def parse(self, task_title):
@@ -23,8 +26,8 @@ class BaseParser:
         old, new = [], []
         for selected in self.selects:
             tid = self.get_id(selected)
-            md5 = self.get_md5(tid) + " " + tid[:100]
             if tid and re.search(self.regex, tid):
+                md5 = self.get_md5(tid) + " " + tid[:100]
                 if md5 not in task_data_store[task_title]:
                     task_data_store[task_title].append(md5)
                     name = self.get_name(selected)
