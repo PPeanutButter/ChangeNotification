@@ -37,7 +37,7 @@ class BaseParser:
 
     @staticmethod
     def get(url):
-        return requests.request('GET', url=url).text
+        return requests.request('GET', url=url, headers={"Accept-Encoding": "none"}).text
 
     def get_id(self, selected) -> str:
         pass
